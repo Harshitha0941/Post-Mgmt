@@ -15,8 +15,8 @@ TypeOrmModule.forFeature([User]),
           signOptions: { expiresIn: '1d' },
         }),
       ],
-    
-      controllers: [UserController],
       providers: [UserService, JwtTokenService],
+      controllers: [UserController],
+      exports:[UserService]
 })
 export class UserModule {}

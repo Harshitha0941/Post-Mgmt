@@ -1,8 +1,10 @@
 /* eslint-disable prettier/prettier */
 import { ApiProperty } from "@nestjs/swagger";
-import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, OneToMany } from "typeorm";
 import { IsString } from "class-validator";
 import * as bcrypt from 'bcrypt';
+
+import { Posts } from "./post.entity";
 
 /* eslint-disable prettier/prettier */
 
@@ -56,7 +58,6 @@ export class User {
     updated_date: string;
 
     static password: any;
-  role: any;
 
      /**
      * generates a bcrypted password ie hashed password
@@ -67,5 +68,9 @@ export class User {
           this.password = await bcrypt.hash(this.password, 10);
       }
 
+    
+    @OneToMany(() => Posts, (posts) => posts.user, {
+    })
+    posts: Posts[];
 
 }
